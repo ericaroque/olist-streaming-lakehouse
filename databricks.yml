@@ -1,0 +1,22 @@
+# This is a Declarative Automation Bundle definition for olist-streaming-lakehouse.
+# The Databricks extension requires databricks.yml configuration file.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+include:
+  - resources/*.yml
+  
+bundle:
+  name: olist-streaming-lakehouse
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-d54bfe5c-282f.cloud.databricks.com
+      profile: olist
+
+  ## Optionally, there could be 'staging' or 'prod' targets here.
+  #
+  # prod:
+  #   workspace:
+  #     host: https://dbc-d54bfe5c-282f.cloud.databricks.com
