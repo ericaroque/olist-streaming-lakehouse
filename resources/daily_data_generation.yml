@@ -1,0 +1,17 @@
+resources:
+  jobs:
+    daily_data_generation:
+      name: olist_daily_data_generation
+      tasks:
+        - task_key: generate_orders
+          notebook_task:
+            notebook_path: ../scripts/00_generate_orders.ipynb
+            source: WORKSPACE
+            base_parameters:
+              execution_mode: daily
+              orders_per_day: "300"
+      schedule:
+        quartz_cron_expression: "0 45 16 * * ?"
+        timezone_id: America/Sao_Paulo
+        pause_status: UNPAUSED
+     
