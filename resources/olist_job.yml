@@ -22,9 +22,25 @@ resources:
             notebook_path: ../scripts/03_silver_transformation.ipynb
             source: WORKSPACE
 
-        - task_key: gold_dimensions
+        - task_key: simulate_order_deliveries
           depends_on:
             - task_key: silver
+          run_if: ALL_SUCCESS  
+          notebook_task:
+            notebook_path: ../scripts/simulate_order_deliveries.ipynb
+            source: WORKSPACE
+
+        - task_key: generate_synthetic_reviews
+          depends_on:
+            - task_key: simulate_order_deliveries
+          run_if: ALL_SUCCESS  
+          notebook_task:
+            notebook_path: ../scripts/generate_synthetic_reviews.ipynb
+            source: WORKSPACE
+
+        - task_key: gold_dimensions
+          depends_on:
+            - task_key: generate_synthetic_reviews
           notebook_task:
             notebook_path: ../scripts/05_gold_dimensions.ipynb
             source: WORKSPACE
@@ -35,3 +51,11 @@ resources:
           notebook_task:
             notebook_path: ../scripts/04_gold_facts.ipynb
             source: WORKSPACE
+
+        - task_key: gold_fact_review
+          depends_on:
+            - task_key: gold_facts
+          notebook_task:
+            notebook_path: ../scripts/customer_reviews.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
